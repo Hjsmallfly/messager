@@ -17,7 +17,7 @@ class Form(QDialog):
 
         self.textHandler = threaded_server.TextHandler()
 
-        self.sock = threaded_server.ThreadedServer(Form.HOST, Form.PORT)
+        self.sock = threaded_server.ThreadedTextServer(Form.HOST, Form.PORT)
         self.sock_thread = self.sock.listen(target=self.textHandler.handleText, new_thread=True)
         self.connect(self.textHandler, SIGNAL("newText"), self.updateText)
 
@@ -61,7 +61,7 @@ class Form(QDialog):
         self.receivedText.setFocus()
 
     def updateText(self, text):
-        self.receivedText.setText(self.receivedText.toPlainText() + text)
+        self.receivedText.setText(self.receivedText.toPlainText() + text + "\n")
 
     def clearText(self):
         print("->clear text")
